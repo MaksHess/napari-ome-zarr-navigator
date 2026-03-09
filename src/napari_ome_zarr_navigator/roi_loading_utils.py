@@ -10,7 +10,6 @@ import ngio.tables
 import numpy as np
 from napari.qt.threading import thread_worker
 from napari.utils.colormaps import Colormap
-from ngio.tables._tables_container import TypedRoiTable
 from qtpy.QtCore import QObject, Signal
 
 from napari_ome_zarr_navigator.util import (
@@ -34,7 +33,7 @@ def fetch_single_image(
 ):
     """Load exactly one channel's ROI and return kwargs for viewer.add_image."""
     # TODO: Refactor ROI table loading to happen before the parallelized fetch
-    ngio_table = ome_zarr_container.get_roi_table(roi_table)
+    ngio_table = ome_zarr_container.get_generic_roi_table(roi_table)
     curr_roi = ngio_table.get(roi_name)
     roi_translation = (
         translation[0] + curr_roi["y"].start,
@@ -114,7 +113,7 @@ def fetch_labels_and_features(
     Returns a dict with keys "labels" (a list of args for add_labels)
     and "features" (a list of {layer_name, df} to attach).
     """
-    ngio_table = ome_zarr_container.get_roi_table(roi_table)
+    ngio_table = ome_zarr_container.get_generic_roi_table(roi_table)
     curr_roi = ngio_table.get(roi_name)
     roi_translation = (
         translation[0] + curr_roi["y"].start,

@@ -58,7 +58,7 @@ def calculate_well_positions(plate_store, row, col, is_plate=True):
     ome_zarr_container = open_ome_zarr_container(
         image_store, cache=True, mode="r"
     )
-    level = ome_zarr_container.levels_paths[0]
+    level = ome_zarr_container.level_paths[0]
     ome_zarr_image = ome_zarr_container.get_image(path=level)
     shape = ome_zarr_image.shape[-2:]
     scale = (ome_zarr_image.pixel_size.y, ome_zarr_image.pixel_size.x)
